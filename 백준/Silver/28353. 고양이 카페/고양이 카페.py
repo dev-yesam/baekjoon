@@ -1,30 +1,20 @@
-#28353
-
-# sys 연습. input만 맨날 썼어서 sys도 써봐야 할 듯.
+# 입력 받기
 import sys
 
 n, k = map(int, sys.stdin.readline().split())
-lst = list(map(int, sys.stdin.readline().split()))
+cats = list(map(int,sys.stdin.readline().split()))
+cats.sort(reverse=True)
+cnt= 0
 
-#카운트
-cnt = 0
+# 인덱스 두 개
+p1, p2 = 0, n-1
 
-# 리스트 내림차순
-lst.sort(reverse=True)
+while p1<p2:
+    if cats[p1] + cats[p2] <= k:
+        p1 +=1
+        p2 -=1
+        cnt +=1
+    else:
+        p1 +=1
 
-
-# 반복문 돌면서 최댓값+최솟값 합쳐서 확인
-for idx in range(len(lst)):
-    #인덱스가 len(lst)-1보다 크거나 같다면 break
-    if idx >=len(lst)-1:
-        break
-    if lst[idx]+lst[-1] <= k:
-        cnt+=1
-        lst.pop() #최솟값 제거
-        
-        
-        
-
-# 출력
 print(cnt)
-
