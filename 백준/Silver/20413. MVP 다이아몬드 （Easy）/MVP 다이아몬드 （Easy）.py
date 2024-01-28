@@ -3,36 +3,31 @@
 # 입력
 n = int(input())
 # 브론즈 -> 다이아 등급 기준액 입력
-stdmoney = list(map(int, input().split()))
+s,g,p,d = map(int, input().split())
 # MVP 등급 및 최대금액을 담을 리스트
 rank = input()
-moneylist = [0] #처음에는 최근 1개월 금액이 없으니 0원을 넣어줌
-
+prev = 0
+total = 0
 # 3개월
 # 30 60 90 150
 # B S G
 
 # 랭크 순회하며 최대 금액 탐색
 for i in rank:
-    mx = 0 #최대 금액
     if i == 'B':
-        mx = stdmoney[0] - moneylist[-1] -1
-        moneylist.append(mx)
+        prev = s - prev -1
     elif i == 'S':
-        mx = stdmoney[1] - moneylist[-1] -1
-        moneylist.append(mx)
+        prev = g - prev -1
     elif i == 'G':
-        mx = stdmoney[2] - moneylist[-1] -1
-        moneylist.append(mx)
+        prev = p - prev -1
     elif i == 'P':
-        mx = stdmoney[3] - moneylist[-1] -1
-        moneylist.append(mx)
+        prev = d - prev -1
     else: #다이아일 때는 그냥 다이아 기준액만큼이 최대값임
-        mx = stdmoney[3]
-        moneylist.append(mx)
+        prev = d
+    total += prev
 
 # 출력
-print(sum(moneylist))
+print(total)
 
         
 
