@@ -1,6 +1,5 @@
 # 백준 0128
 
-
 # 입력
 n = int(input())
 # 브론즈 -> 다이아 등급 기준액 입력
@@ -17,16 +16,16 @@ moneylist = [0] #처음에는 최근 1개월 금액이 없으니 0원을 넣어�
 for i in rank:
     mx = 0 #최대 금액
     if i == 'B':
-        mx = max(stdmoney[0] - moneylist[-1] -1, 0)
+        mx = stdmoney[0] - moneylist[-1] -1
         moneylist.append(mx)
     elif i == 'S':
-        mx = max(stdmoney[1] - moneylist[-1] -1, 0)
+        mx = stdmoney[1] - moneylist[-1] -1
         moneylist.append(mx)
     elif i == 'G':
-        mx = max(stdmoney[2] - moneylist[-1] -1, 0)
+        mx = stdmoney[2] - moneylist[-1] -1
         moneylist.append(mx)
     elif i == 'P':
-        mx = max(stdmoney[3] - moneylist[-1] -1, 0)
+        mx = stdmoney[3] - moneylist[-1] -1
         moneylist.append(mx)
     else: #다이아일 때는 그냥 다이아 기준액만큼이 최대값임
         mx = stdmoney[3]
