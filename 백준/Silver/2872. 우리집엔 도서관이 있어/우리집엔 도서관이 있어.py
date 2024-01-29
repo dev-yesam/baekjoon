@@ -1,17 +1,26 @@
-
-# 입력 받기
 import sys
 
+# 입력
 n = int(sys.stdin.readline())
-lst = []  # 책을 담을 리스트
+books = []
 for _ in range(n):
-    lst.append(int(sys.stdin.readline()))
+    books.append(int(sys.stdin.readline().rstrip()))
 
-max_book_index = lst.index(n)
-max_book = n
-for i in lst[:max_book_index][::-1]:
-    if i == max_book-1:
-        max_book= i
-    else:
+
+
+# 최대 비교
+
+idx = books.index(n)
+now_book = n-1
+
+for book in books[:idx][::-1]:
+    if book == now_book:
+        now_book -= 1
         pass
-print(max_book-1)
+
+
+print(now_book)
+        
+
+
+
