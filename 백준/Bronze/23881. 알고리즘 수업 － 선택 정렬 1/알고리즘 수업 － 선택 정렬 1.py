@@ -1,6 +1,3 @@
-import sys
-input = sys.stdin.readline
-
 # k번째 교환되는 수 = 오름차순 정렬일 때 k-1 인덱스의 원소.
 n, k = map(int, input().split())
 lst = list(map(int, input().split()))
@@ -19,4 +16,3 @@ for i in range(n-1, 0,-1):
             break
 if cnt < k:
     print(-1)
-
