@@ -30,22 +30,12 @@ for tc in range(t):
             c = c + dc[d] * move[i]
 
         elif i in directions:
-            d = d + directions[i]
-            if d < 0:
-                d += 4
-            else:
-                d %= 4
+            d = (d + directions[i]) % 4
 
         # 최대 최소 좌표 확인
-        if r > M_x:
-            M_x = r
-        if r < m_x:
-            m_x = r
-        if c > M_y:
-            M_y = c
-        if c < m_y:
-            m_y = c
-
+        M_x, m_x = max(M_x, r), min(m_x,r)
+        M_y, m_y = max(M_y, c), min(m_y,c)
+    
     # 최대 직사각형 넓이 계산 및 출력
     area = (M_x - m_x) * (M_y - m_y)
     print(area)
