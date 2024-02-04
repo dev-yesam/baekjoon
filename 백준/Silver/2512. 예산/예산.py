@@ -12,14 +12,29 @@ if sum(lst) <= budget:
 
 # 모두 배정 불가
 else:
-    sum_lst = 0
-    for i in range(n):
-        cutline = (budget - sum_lst) // (n - i)
+    # 이진 탐색
+    start = 0
+    end = max(lst)
 
-        if cutline >= lst[i]:
-            sum_lst += lst[i]
-            continue
+    while start <= end:
+
+        mid = (start + end) //2
+
+        # 배정 예산
+        sum_lst=0
+
+        for i in lst:
+            if i <= mid:
+                sum_lst += i
+            else:
+                sum_lst += mid
+
+        if sum_lst  <= budget:
+            cutline = mid
+            start = mid+1
         else:
-            break
+            end = mid-1
 
-print(int(cutline))
+
+
+print(cutline)
