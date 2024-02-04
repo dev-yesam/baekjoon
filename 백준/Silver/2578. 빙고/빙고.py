@@ -1,38 +1,50 @@
+# 2578 빙고
+
+# 빙고 배열 입력
 arr = [list(map(int, input().split())) for _ in range(5)]
 
+# 사회자 번호 리스트
 lst = []
-for i in range(5):
-    lst.extend(list(map(int, input().split())))
+for _ in range(5):
+    lst.extend(map(int, input().split()))
 
+# 번호 지운 횟수
 cnt = 0
-for num in lst:
-    cnt += 1
-    # 찾고 지우고,
-    for i in range(5):
-        for j in range(5):
-            if arr[i][j] == num:
-                arr[i][j] = 0
 
-    # 빙고 확인하고.
+# 번호 리스트 순회
+for num in lst:
+
+    # 빙고 횟수
     bingo = 0
 
-    # 가로 빙고 확인
-    for i in range(5):
-        if all(arr[i][j] == 0 for j in range(5)):
+    for r in range(5):
+        if num in arr[r]:
+            idx = arr[r].index(num)
+            arr[r][idx] = 0
+            break
+
+    cnt += 1
+    # 빙고 확인
+
+    # 가로
+    for r in range(5):
+        if all(i == 0 for i in arr[r]):
             bingo += 1
 
-    # 세로 빙고 확인
-    for j in range(5):
-        if all(arr[i][j] == 0 for i in range(5)):
+    # 세로
+    for c in range(5):
+        if all(arr[i][c] == 0 for i in range(5)):
             bingo += 1
 
-    # 대각 빙고 확인
-    if all(arr[i][i] == 0 for i in range(5)):
+    # 우상 대각선
+    if all(arr[r][r] == 0 for r in range(5)):
         bingo += 1
 
-    if all(arr[i][5 - i - 1] == 0 for i in range(5)):
+    # 좌상 대각선
+    if all(arr[r][4 - r] == 0 for r in range(5)):
         bingo += 1
 
+    # 세 번 빙고가 됐다면 종료
     if bingo >= 3:
         print(cnt)
         break
