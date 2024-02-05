@@ -9,7 +9,6 @@ end = max(snacks)
 res = 0  # 기본값
 
 while start <= end:
-
     # 자른 막대과자
     cut_snacks = 0
 
@@ -18,11 +17,11 @@ while start <= end:
 
     for snack in snacks:
         cut_snacks += (snack // cut)
-        
+
     if cut_snacks >= kids_num:
         start = cut +1
         res = cut
-    
+
     else:
         end = cut - 1
 
