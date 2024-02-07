@@ -1,26 +1,29 @@
-N, M = map(int, input().split())
-titles = [tuple(input().split()) for _ in range(N)]
-titles = [(title, int(power)) for title, power in titles]
+import sys
 
-# 전투력에 따라 정렬
-titles.sort(key=lambda x: x[1])
+input = sys.stdin.readline
 
-powers = [int(input()) for _ in range(M)]
+name_num, power_num = map(int, input().strip().split())
+names = [input().strip().split() for _ in range(name_num)]
+names = [(x, int(y)) for x, y in names]
 
-for power in powers:
-    # 이진 탐색으로 적절한 칭호 찾기
-    start, end = 0, N - 1
+# power 마다, names에서 알맞은 거 찾으면 됨.
+# power보다 크거나 같으면서 인덱스는 가장 작은거 -1
+
+for _ in range(power_num):
+    power = int(input())
+
+    start = 0
+    end = name_num - 1
+    answer = -1
     while start <= end:
+
         mid = (start + end) // 2
-        if titles[mid][1] < power:
-            start = mid + 1
-        else:
+
+        if names[mid][1] >= power:
             end = mid - 1
+            answer = names[mid][0]
 
-    # 경계 조건 확인
-    if start >= N:
-        start = N - 1
-    elif start < 0:
-        start = 0
+        else:
+            start = mid + 1
 
-    print(titles[start][0])
+    print(answer)
