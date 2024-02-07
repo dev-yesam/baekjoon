@@ -1,19 +1,28 @@
-# X : 현재 게임 횟수
-# Y : 이긴 횟수
-X, Y = map(int, input().split())
-Z = int((Y*100 / X))
+# 추가 게임은 적을수록, #승률 추가는 1개만 높으면 됨.
+
+
+games, wins = map(int, input().split())
+
+rate1 = int(wins * 100 / games)
 
 start = 0
 end = 1e9
-res = -1
+
+answer = -1
+
 while start <= end:
-    games = (start + end) // 2
-    new_Z = ((games + Y)*100) / (games + X)
-    if int(new_Z) > Z:
-        end = games - 1
-        res = games
+    if rate1 == 99:
+        break
 
+    mid = (start + end) // 2
+
+    # 승률
+    rate2 = int(((wins + mid) * 100) // (games + mid))
+
+    if rate2 > rate1:
+        end = mid - 1
+        answer = mid
     else:
-        start = games + 1
+        start = mid + 1
 
-print(int(res))
+print(int(answer))
