@@ -1,28 +1,29 @@
-import sys
+n= int(input())
 
-input = sys.stdin.readline
-ans =[]
-n = int(input())
 stack = []
-answer = True
-start= 1
+answer = []
+found = True
+
+now = 1
 for _ in range(n):
+
     num = int(input())
 
-    while start <= num:
-        stack.append(start)
-        ans.append('+')
-        start += 1
+    while now <= num:
+        answer.append("+")
+        stack.append(now)
+        now += 1
 
     if stack[-1] == num:
+        answer.append("-")
         stack.pop()
-        ans.append('-')
-    else:
-        answer = False
 
-if not answer:
-    print('NO')
+    elif stack[-1] != num:
+        found =False
+
+if not found:
+    print("NO")
+
 else:
-    for l in ans:
-        print(l)
-
+    for i in answer:
+        print(i)
