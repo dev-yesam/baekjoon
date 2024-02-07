@@ -1,28 +1,26 @@
-# 입력
+# 과자 길수록, & 과자수는 조카보다는 크거나 같
 
-kids_num, snacks_num = map(int, input().split())
+kids_num, snack_num = map(int, input().split())
 snacks = list(map(int, input().split()))
+
+# 이진 탐색
 
 start = 1
 end = max(snacks)
 
-res = 0  # 기본값
-
+answer = 0
 while start <= end:
-    # 자른 막대과자
-    cut_snacks = 0
+    mid = (start + end) // 2
 
-    # 자르는 지점 middle
-    cut = (start + end) // 2
-
+    # 과자 개수
+    total = 0
     for snack in snacks:
-        cut_snacks += (snack // cut)
+        total += snack // mid
 
-    if cut_snacks >= kids_num:
-        start = cut +1
-        res = cut
-
+    if total >= kids_num:
+        start = mid + 1
+        answer = mid
     else:
-        end = cut - 1
+        end = mid - 1
 
-print(res)
+print(answer)
