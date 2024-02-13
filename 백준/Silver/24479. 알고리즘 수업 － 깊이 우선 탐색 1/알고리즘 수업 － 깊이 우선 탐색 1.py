@@ -33,7 +33,7 @@ def dfs(graph, V, start):
         for vtx in adjl[now]:
 
             if not visited[vtx]:
-                adjl[now].remove(vtx)
+                adjl[now].pop(0)
                 adjl[vtx].remove(now)
                 stack.append(now)
 
