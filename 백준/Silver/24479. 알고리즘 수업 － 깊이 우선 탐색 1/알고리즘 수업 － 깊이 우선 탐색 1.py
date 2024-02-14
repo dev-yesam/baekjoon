@@ -1,57 +1,32 @@
 import sys
+sys.setrecursionlimit(10**5)
 
-input = sys.stdin.readline
+vtx_num, edges_num, start = map(int, sys.stdin.readline().rstrip().split())
 
-# V 정점의 수, E 간선의 수, start 시작 정점
-V, E, start = map(int, input().rstrip().split())
-
-# 인접리스트
-adjl = [[] for _ in range(V + 1)]
-
-# 간선 입력
-for edge in range(E):
-    a, b = map(int, input().rstrip().split())
+adjl = [[] for _ in range(vtx_num + 1)]
+for _ in range(edges_num):
+    a, b = map(int, sys.stdin.readline().split())
     adjl[a].append(b)
     adjl[b].append(a)
 
-# 인접 리스트 정렬
-for v in adjl:
-    v.sort()
+for vtx in adjl:
+    vtx.sort()
 
-#
-visited = [0] * (V + 1)
+cnt = 1
+visited = [0] * (vtx_num + 1)
 
-# dfs 생성
-def dfs(graph, V, start):
 
-    stack = []
+def dfs(graph, start, visited):
+    global cnt
+    # 현재 위치 방문
     now = start
-    cnt = 1
     visited[now] = cnt
-    while True:
+    cnt += 1
+    for vtx in graph[now]:
+        if visited[vtx] == 0:
+            dfs(graph, vtx, visited)
 
-        for vtx in adjl[now]:
+dfs(adjl, start, visited)
 
-            if not visited[vtx]:
-                adjl[now].pop(0)
-                adjl[vtx].remove(now)
-                stack.append(now)
-
-                now = vtx
-                cnt += 1
-                visited[vtx] = cnt
-
-                break
-
-        else:
-            if stack:
-                now = stack.pop()
-            else:
-                break
-
-    return visited
-
-
-lst = dfs(adjl, V, start)[1:]
-for i in lst:
-    print(i)
+for vtx in visited[1:]:
+    print(vtx)
