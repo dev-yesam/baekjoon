@@ -1,8 +1,8 @@
 n, m = map(int, input().split())
-b = []
+lst = []
 
 
-def bt(start, end, lst):
+def bt(start, end):
     if start > end:
         print(*lst)
         return
@@ -10,7 +10,7 @@ def bt(start, end, lst):
     for i in range(1,n+1):
         if i not in lst:
             lst.append(i)
-            bt(start + 1,end, lst)
+            bt(start + 1,end)
             lst.pop()
 
-bt(1,m,b)
+bt(1,m)
