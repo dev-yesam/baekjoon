@@ -1,14 +1,28 @@
-t = int(input())
+# 11501
+
+# 입력
+import sys
+t = int(sys.stdin.readline())
 
 for _ in range(t):
-    n = int(input())
-    stocks = list(map(int, input().split()))
-    max_day = stocks[-1]
-    ans = 0
-    for i in range(n - 2, -1, -1):
-        if stocks[i] > max_day:
-            max_day = stocks[i]
-        else:
-            ans += max_day - stocks[i]
+    n = int(sys.stdin.readline())
+    days = list(map(int, sys.stdin.readline().split()))
+    
+    # 날짜 역순 변환
+    days.reverse()
 
-    print(ans)
+    # 이익의 합
+    res = 0
+
+    # 최대값
+    max = 0
+
+    # 날짜 순회
+    for day in days:
+        if day > max:
+            max = day
+        else:
+            res += max - day
+    
+    # 출력
+    print(res)
