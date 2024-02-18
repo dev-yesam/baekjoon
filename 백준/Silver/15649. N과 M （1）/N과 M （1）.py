@@ -1,16 +1,20 @@
-n, m = map(int, input().split())
-lst = []
+n, m = map(int,input().split())
+lst = [i for i in range(1,n+1)]
+res = []
 
+# 백트래킹
+# 0, 1, .... m 스탑.
+def recur(num):
 
-def bt(start, end):
-    if start > end:
-        print(*lst)
+    if num == m:
+        print(*res)
         return
 
-    for i in range(1,n+1):
-        if i not in lst:
-            lst.append(i)
-            bt(start + 1,end)
-            lst.pop()
+    for i in lst:
+        if i not in res:
+            res.append(i)
+            recur(num+1)
 
-bt(1,m)
+            res.pop()
+
+recur(0)
