@@ -1,11 +1,11 @@
 def isqueen(i, j):
     # 좌상 대각선
-    for diag1 in range(-n + 1, n):
+    for diag1 in range(-n + 1, 0):
         if 0 <= i + diag1 < n and 0 <= j + diag1 < n and arr[i + diag1][j + diag1] == 1:
             return False
 
     # 우상 대각선
-    for diag2 in range(-n + 1, n):
+    for diag2 in range(-n + 1, 0):
         if 0 <= i + diag2 < n and 0 <= j - diag2 < n and arr[i+diag2][j-diag2] == 1:
             return False
 
