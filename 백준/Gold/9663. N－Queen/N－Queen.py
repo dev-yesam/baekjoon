@@ -1,45 +1,46 @@
-def isqueen(i, j):
-    # 좌상 대각선
-    for diag1 in range(-n + 1, 0):
-        if 0 <= i + diag1 < n and 0 <= j + diag1 < n and arr[i + diag1][j + diag1] == 1:
+# 좌상 대각선과 우상 대각선 확인 해야함.
+def diag(r, c):
+    # 좌상 대각선 => r-x,c-x -> x: 0~ n-1  & 범위 이탈 여부 확인
+    for x in range(1, n):
+        if 0 <= r - x and c - x >= 0 and arr[r - x][c - x] == 1:
+            return False
+    # 우상 대각선 => r-x,c+x -> x: 0~ n-1 & 범위 이탈 여부 확인
+    for x in range(1, n):
+        if 0 <= r - x and c + x < n and arr[r - x][c + x] == 1:
             return False
 
-    # 우상 대각선
-    for diag2 in range(-n + 1, 0):
-        if 0 <= i + diag2 < n and 0 <= j - diag2 < n and arr[i+diag2][j-diag2] == 1:
-            return False
-
+    # 그외
     return True
 
-
-
-def recur(level,row):
+# back-tracking function
+def recur(level):
     global cnt
-    # 종료 조건
-    if level == n:
+    if level == n: #  full-placed
         cnt += 1
         return
 
-    # 재귀 호출
-    for i in range(n):
-        # 방문하지 않았으며, 퀸이 겹치지 않으면
-        if not col_visited[i] and isqueen(row,i) :
-            col_visited[i] = 1
-            arr[row][i] = 1
-
-            recur(level+1, row+1)
-            # 복구
-            col_visited[i] = 0
-            arr[row][i] = 0
-
+    # place the queen
+    for col in range(n):
+        # can place?
+        if not col_visited[col] and diag(level,col):
+            col_visited[col] = 1
+            arr[level][col] = 1
+            recur(level+1)
+            col_visited[col] = 0
+            arr[level][col] = 0
 
 n = int(input())
-arr = [[0] * n for _ in range(n)]
-cnt = 0
+arr = [ [0]*n for _ in range(n)]
 
+# 각 row 마다 위에서부터 하나씩 놓으면 됨
+# 각 col 마다 겹치면 안됨 -> col_lst = []
 col_visited = [0] * n
 
+# count
+cnt =0
 
-recur(0,0)
+# call the function
+recur(0)
 
+# print
 print(cnt)
