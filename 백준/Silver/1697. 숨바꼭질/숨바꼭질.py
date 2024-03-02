@@ -15,7 +15,7 @@ else:
     def bfs():
         # 시작점
         # [1] 사전 방문 처리
-        visited = [0] * (10 ** 5 + 1)
+        visited = [0] * (200001)
         visited[N] = 1
 
         # [2] 방문 행동 -> 없음
@@ -30,10 +30,12 @@ else:
                 return visited[now] - 1
 
             for next in (now - 1, now + 1, now * 2):
-                if 0 <= next <= 10 ** 5 and visited[next] == 0:
+                if 0 <= next <= 200000 and visited[next] == 0:
                     visited[next] = visited[now] + 1
                     q.append(next)
 
-
+        # 만약 뭐가 잘못됐다면
+        return -1
+    
     cnt = bfs()
     print(cnt)
