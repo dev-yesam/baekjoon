@@ -1,52 +1,34 @@
-
-def count_r(lst):
-    cnt = 1
-    ans = 1
-    for i in range(len(lst)-1):
-        if lst[i] == lst[i+1]:
+def count(lst):
+    M = cnt = 1
+    for i in range(1, len(lst)):
+        if lst[i] == lst[i - 1]:
             cnt += 1
-            ans = max(ans, cnt)
+            M = max(M, cnt)
         else:
             cnt = 1
-
-    return ans
-
-
-def count_c(lst,j):
-    cnt = 1
-    ans = 1
-    for i in range(N - 1):
-        if lst[i][j] == lst[i + 1][j]:
-            cnt += 1
-            ans = max(ans, cnt)
-        else:
-            cnt = 1
-
-    return ans
+    return M
 
 
-# 우측 : 행 열 열
-## 전치행렬하면 우측이랑 똑같음. 하측 : 열 행 행
-
-def solve(lst):
+def solve(arr, arr_t):
     mx = 0
-    for i in range(N):
-        for j in range(N - 1):
-            # 우측과 자리 교환
-            lst[i][j], lst[i][j + 1] = lst[i][j + 1], lst[i][j]
-            mx = max(mx, count_r(lst[i]),count_c(lst, j),count_c(lst, j+1))
-            lst[i][j], lst[i][j + 1] = lst[i][j + 1], lst[i][j]
+    for i in range(n):
+        for j in range(n - 1):
+            # 우측 swap
+            arr[i][j], arr[i][j + 1] = arr[i][j + 1], arr[i][j]
+            arr_t[j][i], arr_t[j + 1][i] = arr_t[j + 1][i], arr_t[j][i]
+            # 행 열 열
+            mx = max(mx, count(arr[i]), count(arr_t[j]), count(arr_t[j + 1]))
+
+            # 복구
+            arr[i][j], arr[i][j + 1] = arr[i][j + 1], arr[i][j]
+            arr_t[j][i], arr_t[j + 1][i] = arr_t[j + 1][i], arr_t[j][i]
 
     return mx
 
 
-# 입력값
-N = int(input())
-arr = [list(input()) for _ in range(N)]
-
-# 전치행렬 만들기 => 신기하네....
+n = int(input())
+arr = [list(input()) for _ in range(n)]
 arr_t = list(map(list, zip(*arr)))
 
-ans = max(solve(arr), solve(arr_t))
+ans = max(solve(arr, arr_t), solve(arr_t, arr))
 print(ans)
-
