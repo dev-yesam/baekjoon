@@ -1,6 +1,7 @@
 import sys
-sys.setrecursionlimit(10**5)
 
+sys.setrecursionlimit(10 ** 4)
+input = sys.stdin.readline
 
 # 입력값
 v = int(input())
@@ -11,24 +12,19 @@ adjl = [[] for _ in range(v + 1)]
 # 트리 정보 입력
 for _ in range(v):
     lst = list(map(int, input().split()))
-    node = lst.pop(0)
-    while True:
-        if lst[0] == -1:
-            break
-        else:
-            c = lst.pop(0)
-            distance = lst.pop(0)
-            adjl[node].append((c, distance))
-            # adjl[c].append((node, distance))
+    node = lst[0]
+    for i in range(1, len(lst) - 1, 2):
+        adjl[node].append((lst[i], lst[i + 1]))
 
 # 트리의 지름
 mx = 0
+
+
 # mx_node = 0
 
 def dfs(start, weight):
     global mx, mx_node
-    visited[start]= 1
-
+    visited[start] = 1
 
     # 거리가 크냐
     if mx < weight:
