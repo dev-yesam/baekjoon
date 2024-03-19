@@ -1,7 +1,7 @@
 import sys
-sys.setrecursionlimit(10**5)
-
 n, m, r = map(int, input().split())
+sys.setrecursionlimit(n+10)
+
 adjl = [[] for _ in range(n + 1)]
 depth = [-1] * (n + 1)
 orders = [0] * (n + 1)
@@ -17,9 +17,11 @@ for node in adjl:
 
 
 def dfs(now, d):
-    global order
+    global order, total
     depth[now] = d
     orders[now] = order
+    total += depth[now] * orders[now]
+
     order += 1
 
     for next in adjl[now]:
@@ -27,13 +29,13 @@ def dfs(now, d):
             dfs(next, d + 1)
 
 
+total = 0
 order = 1
 
 dfs(r, 0)
 
-total = 0
-for i in range(1, n + 1):
-    # print(f'{i}번 노드 => depth: {depth[i]} order: {orders[i]}')
-    total += depth[i] * orders[i]
+# for i in range(1, n + 1):
+#     # print(f'{i}번 노드 => depth: {depth[i]} order: {orders[i]}')
+#     total += depth[i] * orders[i]
 
 print(total)
