@@ -1,3 +1,7 @@
+import sys
+input = sys.stdin.readline
+
+
 def find_set(x):
     if x == p[x]:
         return x
