@@ -22,7 +22,11 @@ def prim(start):
 
         visited[now_node] = 1
         sum_weight += now_weight
-
+        
+        # 막판 효율화
+        cnt += 1
+        if cnt == n:
+            break
 
 
         # 다음 노드
@@ -49,5 +53,5 @@ for tc in range(1, t + 1):
 
     ans = prim(0)
 
-    # 출력
+# 출력
     print(f'#{tc}', ans)
