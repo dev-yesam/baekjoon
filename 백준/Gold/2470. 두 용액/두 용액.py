@@ -1,3 +1,5 @@
+####### 1. 투 포인터 사용 버전 ########
+
 n = int(input())
 lst = list(map(int, input().split()))
 lst.sort()
@@ -21,12 +23,14 @@ while start < end:
         ans_end = end
         ans = abs(total)
 
-        if ans == 0:
-            break
 
     ## 토탈이 음수냐 양수냐가 중요했던 문제
     if total < 0:
         start += 1
+
+    elif total == 0:
+        break
+
     else:
         end -= 1
 
