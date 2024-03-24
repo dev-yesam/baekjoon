@@ -1,57 +1,45 @@
 from heapq import heappush, heappop
 
 
-# 프림 함수 (bfs 응용)
+# 최소 신장 트리 문제
+# 간선 수가 많을 수 있으니 프림
+
 def prim(start):
     visited = [0] * n
     heap = []
-    sum_weight = 0
+    heappush(heap, (0, start))
+    total = 0
     cnt = 0
-    # 시작점
-    # visited[start] = 1 => 밑에서 처리하기에 생략 가능
-    heappush(heap, (0, 0))  # 가중치, 해당 노드
-
     # 방문 예약
     while heap:
-        # 꺼내기
-        now_weight, now_node = heappop(heap)
+        weight, now = heappop(heap)
 
-        # 이미 방문했냐
-        if visited[now_node]:
+        # 이미 방문한 적 있다면
+        if visited[now]:
             continue
 
-        visited[now_node] = 1
-        sum_weight += now_weight
-        
-        # 막판 효율화
+        visited[now] = 1
+        total += weight
+
         cnt += 1
-        if cnt == n:
-            break
+        if cnt == n: break  # 최적화
 
-
-        # 다음 노드
         for next in range(n):
             if not visited[next]:
-                dist = (x_lst[now_node] - x_lst[next]) ** 2 + (y_lst[now_node] - y_lst[next]) ** 2
-                price = e * dist
-                heappush(heap, (price, next))
+                dist = (x_lst[now] - x_lst[next]) ** 2 + (y_lst[now] - y_lst[next]) ** 2
+                heappush(heap, (dist*e, next))
 
-    return round(sum_weight)
+    return total
 
 
 t = int(input())
 for tc in range(1, t + 1):
-    # 섬의 개수
     n = int(input())
     x_lst = list(map(int, input().split()))
     y_lst = list(map(int, input().split()))
-    # 세율
     e = float(input())
 
-    # 비용 = 세율 * 길이^2
-    # 간선이 어마 어마 하게 많음 => 프림 사용
-
+    # 최소 환경 부담금
     ans = prim(0)
 
-# 출력
-    print(f'#{tc}', ans)
+    print(f'#{tc}', round(ans))
