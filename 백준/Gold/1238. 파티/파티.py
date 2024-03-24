@@ -1,53 +1,46 @@
 from heapq import heappush, heappop
-
+import sys
+input = sys.stdin.readline
 
 def dijkstra(start):
     # 시작점
+    dists[start][start] = 0
     pq = []
-    pq.append((0,start))
-    dists[start][start]=0
+    heappush(pq, (0,start))
 
-
-    # 방문예약
     while pq:
-        # 꺼내기
-        now_dist, now = heappop(pq)
+        #꺼내기
+        dist, now = heappop(pq)
 
-        if now_dist > dists[start][now]:
+        if dist > dists[start][now]:
             continue
 
-        # 다음 방문 예약
         for next_weight, next in adjl[now]:
-            next_dist = now_dist + next_weight
+            next_dist = next_weight + dists[start][now]
             if next_dist < dists[start][next]:
-                heappush(pq, (next_dist, next))
                 dists[start][next] = next_dist
-        
+                heappush(pq, (next_dist, next))
 
-# n 마을 수 m 도로 수, x 목표 마을
+
+# n 마을의 수 , m 간선의 수, x 목적지
 n, m, x = map(int, input().split())
 adjl = [[] for _ in range(n + 1)]
 for _ in range(m):
-    s, e, w = map(int, input().split())
-    adjl[s].append((w, e))
+    a, b, w = map(int, input().split())
+    adjl[a].append((w, b))
+    adjl[a].append((w, a))
 
-# 양방향 다익스트라
-INF = 100000
+# 거리 2차원 배열
+INF = 200000
 dists = [[INF] * (n + 1) for _ in range(n + 1)]
 
-for i in range(1, n + 1):
+# 다익스트라 2차원
+for i in range(1,n+1):
     dijkstra(i)
 
-
 # 최대 시간
-ans = 0
-for i in range(1, n + 1):
-    if i == x:
-        continue
-    cnt = dists[i][x] + dists[x][i]
-    if ans < cnt:
-        ans = cnt
+maxv = 0
+for i in range(1,n+1):
+    maxv = max(maxv, dists[i][x]+dists[x][i])
 
-
-# 가장 오랜 시간이 걸린 학생
-print(ans)
+print(maxv)
