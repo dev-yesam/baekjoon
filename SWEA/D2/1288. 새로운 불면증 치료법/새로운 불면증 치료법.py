@@ -1,20 +1,16 @@
-# 진짜 운이 나빠도 100번까지 곱하면 0~9가 다 나온다고 보장할 수 있음.
-
 t = int(input())
-for tc in range(1,t+1):
-    n_start = int(input())
-    n_nums = 0
-    cp = (1<<10)-1
+for tc in range(1, t + 1):
+    n = int(input())
+    ans_bin = 0
     cnt = 1
-    n = str(n_start*cnt)
+
     while True:
-        for num in n:
-            n_nums = n_nums | (1<< int(num))
+        cmp_bin = str(n * cnt)
+        for b in cmp_bin:
+            ans_bin = ans_bin | (1 << int(b))
 
-        if n_nums == cp:
+        if ans_bin & ((1 << 10) - 1) == (1 << 10) - 1:
             break
-
         cnt += 1
-        n = str(n_start*cnt)
 
-    print(f'#{tc}', n)
+    print(f'#{tc}', cmp_bin)
