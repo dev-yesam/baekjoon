@@ -9,7 +9,7 @@ for tc in range(1, t + 1):
         for b in cmp_bin:
             ans_bin = ans_bin | (1 << int(b))
 
-        if ans_bin & x ==x:
+        if ans_bin ==x:
             break
         cnt += 1
 
