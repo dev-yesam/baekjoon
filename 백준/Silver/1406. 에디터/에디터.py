@@ -1,5 +1,7 @@
-#### gpt 코드 #####
-### 다시 풀어 봐야함 ####
+import sys
+input = sys.stdin.readline
+
+## 더미헤드 - 더미테일(커서)
 
 class Node:
     def __init__(self, data):
@@ -9,56 +11,59 @@ class Node:
 
 class DoublyLinkedList:
     def __init__(self):
-        self.head = Node(None)  # 더미 헤드 노드
-        self.tail = Node(None)  # 더미 테일 노드
+        self.head = Node(None) # 더미 헤드
+        self.tail = Node(None) # 더미 테일
         self.head.next = self.tail
         self.tail.prev = self.head
-        self.cursor = self.tail  # 커서는 초기에 테일에 위치
-
-    def insert(self, char):
-        new_node = Node(char)
-        new_node.prev = self.cursor.prev
-        new_node.next = self.cursor
-        self.cursor.prev.next = new_node
-        self.cursor.prev = new_node
-
-    def delete(self):
-        if self.cursor.prev != self.head:  # 헤드 노드의 다음 노드가 아닐 때만 삭제
-            self.cursor.prev = self.cursor.prev.prev
-            self.cursor.prev.next = self.cursor
+        self.cursor = self.tail
 
     def move_left(self):
-        if self.cursor.prev != self.head:  # 맨 앞이 아니면
+        if self.cursor.prev != self.head:
             self.cursor = self.cursor.prev
 
     def move_right(self):
-        if self.cursor != self.tail:  # 맨 끝이 아니면
+        if self.cursor != self.tail:
             self.cursor = self.cursor.next
 
-    def to_string(self):
-        result = []
+    def delete(self):
+        # 왼쪽에 글자가 없다면 왼쪽 노드 삭제.
+        if self.cursor.prev != self.head:
+            self.cursor.prev.prev.next = self.cursor
+            self.cursor.prev = self.cursor.prev.prev
+
+    def insert(self, data):
+        new = Node(data)
+        new.prev = self.cursor.prev
+        new.next = self.cursor
+        self.cursor.prev.next = new
+        self.cursor.prev = new
+
+    def result(self):
+        temp = []
         current = self.head.next
         while current != self.tail:
-            result.append(current.data)
+            temp.append(current.data)
             current = current.next
-        return ''.join(result)
+        return ''.join(temp)
 
-# 초기 문자열과 명령어 처리
-editor = DoublyLinkedList()
-initial_string = input()  # 초기 문자열 입력
-for char in initial_string:
-    editor.insert(char)
 
-m = int(input())  # 명령어 수 입력
-for _ in range(m):
+word = input().rstrip()
+lst = DoublyLinkedList()
+for char in word:
+    lst.insert(char)
+
+
+n = int(input())
+for _ in range(n):
     command = input().split()
     if command[0] == 'L':
-        editor.move_left()
+        lst.move_left()
     elif command[0] == 'D':
-        editor.move_right()
+        lst.move_right()
     elif command[0] == 'B':
-        editor.delete()
+        lst.delete()
     elif command[0] == 'P':
-        editor.insert(command[1])
+        lst.insert(command[1])
 
-print(editor.to_string())
+
+print(lst.result())
