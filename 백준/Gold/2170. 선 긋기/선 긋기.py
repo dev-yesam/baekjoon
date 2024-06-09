@@ -2,10 +2,10 @@ import sys
 
 input = sys.stdin.readline
 
-## 신발끈 공식 써야함
+
 
 n = int(input())
-lst = [list(map(int, input().split())) for _ in range(n)]
+lst = [tuple(map(int, input().split())) for _ in range(n)]
 lst.sort()
 length = lst[0][1]-lst[0][0]
 for i in range(1,n):
@@ -16,7 +16,9 @@ for i in range(1,n):
             length += lst[i][1]-lst[i-1][1]
         # 확장안되면?
         else:
-            lst[i][1] = lst[i-1][1]
+            new_tuple = (lst[i][0], lst[i-1][1])
+            lst[i] = new_tuple
+
     # 안겹치면?
     else:
         length += lst[i][1]-lst[i][0]
