@@ -9,7 +9,7 @@ for _ in range(n):
     lst.append((s, 1))  # 시작점
     lst.append((e, -1))  # 끝점
 
-lst.sort(key=lambda x: (x[0], x[1]))
+lst.sort()
 ans = 0
 count = 0
 for x, y in lst:
